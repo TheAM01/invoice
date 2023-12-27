@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Invoice</title>
+</head>
+<body id="body">
+    <div class="main" id="main">
+
+        <div class="left">
+
+            <span class="heading">Invoice</span>
+
+            <div class="key-value-pair">
+                <span class="key">Date</span>
+                <span class="value" id="date"></span>
+            </div>
+
+            <div class="user-input-wrapper">
+                <input type="text" class="user-input" name="invoice-for" id="invoice-for" placeholder="Invoice for (eg. groceries, work, etc.)">
+            </div>
+
+            <div class="items-table">
+
+                <table id="table-items-table">
+
+                    <tbody id="tr-collection">
+
+                        <tr class="heading">
+                            <th class="th01">Item</th>
+                            <th class="th02">Quantity</th>
+                            <th class="th03">Unit price</th>
+                            <th class="th04">Price</th>
+                            <th class="th05">Action</th>
+                        </tr>
+    
+                        <tr id="tr-1">
+                            <td>
+                                <input type="text" class="table-input table-input-item" name="item-1" id="item-1" placeholder="Item name">
+                            </td>
+                            <td>
+                                <input type="number" class="table-input table-input-quantity" name="quantity-1" id="quantity-1" value="0">
+                            </td>
+                            <td>
+                                <input type="number" class="table-input table-input-price" name="price-1" id="price-1" value="0">
+                            </td>
+                            <td>
+                                <span id="total-price-1" class="tp">0</span>
+                            </td>
+                            <td>
+                                <button class="remove-button disabled">
+                                    X
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <button class="new-item-button" onclick="addNewItem()" >Add new item</button>
+
+        </div>
+        
+        <div class="right">
+            
+            <button class="finalize" onclick="finalize()">Review invoice</button>
+
+            <div class="final-calculation">
+    
+                <div class="key-value-pair kvp-right">
+                    <span class="key">Sub total: </span>
+                    <span class="value" id="sub-total">0</span>
+                </div>
+    
+            </div>
+
+        </div>
+
+    </div>
+    <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="./script.js"></script>
+    <script>
+
+        build()
+
+        function generateReceipt() {
+
+            html2canvas(document.querySelector("#preview"), {
+                onrendered: function(canvas) {
+                    // document.body.appendChild(canvas);
+                    return Canvas2Image.saveAsPNG(canvas);
+                }
+            })
+
+        }
+
+    </script>
+</body>
+</html>
