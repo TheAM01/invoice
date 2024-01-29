@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style-responsive.css">
     <title>Invoice</title>
 </head>
 <body id="body">
@@ -15,11 +16,11 @@
 
             <div class="key-value-pair">
                 <span class="key">Date</span>
-                <span class="value" id="date"></span>
+                <input type="date" name="date" id="date-now">
             </div>
 
             <div class="user-input-wrapper">
-                <input type="text" class="user-input" name="invoice-for" id="invoice-for" placeholder="Invoice for (eg. groceries, work, etc.)">
+                <input type="text" class="user-input" name="invoice-for" id="invoice-for" placeholder="Additional notes">
             </div>
 
             <div class="items-table">

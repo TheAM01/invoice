@@ -1,15 +1,18 @@
 function build() {
 
     const date = buildDate();
-    document.getElementById("date").innerText = date;
+    document.getElementById("date-now").setAttribute("value", date);
 
     addEventListeners();
 
 }
 
 function addEventListeners() {
-    document.getElementById("quantity-1").addEventListener("input", quantityEventHandler)
-    document.getElementById("price-1").addEventListener("input", priceEventHandler)
+
+    document.getElementById("item-1").addEventListener("input", itemEventHandler);
+    document.getElementById("quantity-1").addEventListener("input", quantityEventHandler);
+    document.getElementById("price-1").addEventListener("input", priceEventHandler);
+
 }
 
 function buildDate() {
@@ -23,11 +26,9 @@ function buildDate() {
     if (date < 10) date = '0' + date;
     if (month < 10) month = '0' + month;
 
-    const formatted = `${date}/${month}/${year}`;
+    const formatted = `${year}-${month}-${date}`;
 
-    return formatted
-
-    
+    return formatted;
 
 }
 
@@ -47,11 +48,11 @@ function addNewItem() {
     td01.appendChild(inputItem);
 
     let td02 = element("td");
-    let inputQuantity = element("input", "table-input table-input-quantity", {"name": `quantity-${index}`, "id": `quantity-${index}`, "value": "0"});
+    let inputQuantity = element("input", "table-input table-input-quantity", {"type": "number", "name": `quantity-${index}`, "id": `quantity-${index}`, "value": "0"});
     td02.appendChild(inputQuantity);
 
     let td03 = element("td");
-    let inputPrice = element("input", "table-input table-input-price", {"name": `price-${index}`, "id": `price-${index}`, "value": "0"});
+    let inputPrice = element("input", "table-input table-input-price", {"type": "number", "name": `price-${index}`, "id": `price-${index}`, "value": "0"});
     td03.appendChild(inputPrice);
 
     let td04 = element("td");
@@ -63,14 +64,14 @@ function addNewItem() {
     let trashImage = element("img", "icon", {"src": "https://cdn-icons-png.flaticon.com/512/542/542724.png"});
     removeButton.appendChild(trashImage);
     td05.appendChild(removeButton);
-
+    
+    inputItem.addEventListener("input", itemEventHandler);
     inputQuantity.addEventListener("input", quantityEventHandler);
     inputPrice.addEventListener("input", priceEventHandler)
 
     appendChildren(tr, [td01, td02, td03, td04, td05]);
 
     tbody.appendChild(tr);
-
 
 }
 
@@ -113,7 +114,21 @@ function appendChildren(element, children) {
 
 }
 
+function itemEventHandler() {
+    if (this.value.length > 0) {
+        document.getElementById(this.id).style["box-shadow"] = "rgba(0, 0, 0, 0.5) 0px 0px 5px inset"
+    } else {
+        document.getElementById(this.id).style["box-shadow"] =  "rgba(255, 0, 0, 1) 0px 0px 5px inset";
+    }
+}
+
 function quantityEventHandler() {
+
+    if (parseInt(this.value) > 0) {
+        document.getElementById(this.id).style["box-shadow"] = "rgba(0, 0, 0, 0.5) 0px 0px 5px inset"
+    } else {
+        document.getElementById(this.id).style["box-shadow"] =  "rgba(255, 0, 0, 1) 0px 0px 5px inset";
+    }
 
     let quantity = parseInt(this.value) || 0;
     let index = parseInt(this.id.replace("quantity-", ""));
@@ -124,6 +139,12 @@ function quantityEventHandler() {
 }
 
 function priceEventHandler() {
+
+    if (parseInt(this.value) > 0) {
+        document.getElementById(this.id).style["box-shadow"] = "rgba(0, 0, 0, 0.5) 0px 0px 5px inset"
+    } else {
+        document.getElementById(this.id).style["box-shadow"] =  "rgba(255, 0, 0, 1) 0px 0px 5px inset";
+    }
 
     let price = parseInt(this.value) || 0;
     let index = parseInt(this.id.replace("price-", ""));
@@ -159,8 +180,8 @@ function finalize() {
         let tr = element("tr", "preview-table-tr");
 
         let td_name = element("td", "preview-table-td", {}, name);
-        let td_quantity = element("td", "preview-table-td", {}, quantity);
-        let td_price = element("td", "preview-table-td", {}, price);
+        let td_quantity = element("td", "preview-table-td gray", {}, quantity);
+        let td_price = element("td", "preview-table-td gray", {}, price);
         let td_tp = element("td", "preview-table-td", {}, tp);
 
         appendChildren(tr, [td_name, td_quantity, td_price, td_tp]);
@@ -171,20 +192,23 @@ function finalize() {
 
     let lastTr = element("tr", "preview-table-tr");
     let grandTotalTitle = element("td", "preview-table-td preview-table-total", {}, "Total");
-    let grandTotal = element("td", "preview-table-td", {}, `Rs ${document.getElementById("sub-total").innerText}/-`);
+    let grandTotal = element("td", "preview-table-td emphasis", {}, `Rs ${document.getElementById("sub-total").innerText}/-`);
     let emptyTd1 = element("td", "preview-table-td")
     let emptyTd2 = element("td", "preview-table-td")
 
     appendChildren(lastTr, [emptyTd1, emptyTd2, grandTotalTitle, grandTotal]);
     itemsList.push(lastTr)
 
-    let invoiceFor = document.getElementById("invoice-for").value || "(not specified)";
-    let formatted = buildDate();
+    let intro = element("div", "receipt-intro", null, "Invoice details")
+
+    let invoiceFor = document.getElementById("invoice-for").value || "none";
+    let dateRaw = document.getElementById("date-now").value;
+    let dateFormatted = dateRaw.split("-").reverse().join("/");
 
     let previewWrapper = element("div", "preview-wrapper", {"id": "preview-wrapper"});
     let preview = element("div", "preview", {"id": "preview"});
-    let title = element("div", "preview-title", {}, `Invoice details for ${invoiceFor}.`);
-    let date = element("div", "preview-date", {}, `Date: ${formatted}.`);
+    let title = element("div", "preview-title", {}, `Additional notes: ${invoiceFor}.`);
+    let date = element("div", "preview-date", {}, `Date: ${dateFormatted}.`);
 
     let table = element("table", "preview-table");
     let tbody = element("tbody", "preview-tbody");
@@ -205,14 +229,10 @@ function finalize() {
     
     table.appendChild(tbody);
 
-    appendChildren(preview, [title, date, table, closeButton, sendButton]);
+    appendChildren(preview, [intro, title, date, table, closeButton, sendButton]);
 
     appendChildren(previewWrapper, [preview, closeButton, sendButton]);
 
     document.getElementById("body").appendChild(previewWrapper);
 
-
 }
-
-
-// https://wa.me/send/+923002369080?text=Hello:%202,%203,%206%0AWorld,%208,%205,%2040

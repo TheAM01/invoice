@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 
 :root {
     --one: #163020;
@@ -8,12 +9,10 @@
     /* --border: 1px dotted gray; */
 }
 
-
-
 * {
     padding: 0;
     margin: 0;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: 18px;
     box-sizing: border-box;
     border: var(--border);
@@ -21,6 +20,7 @@
 
 body {
     background-color: var(--three);
+    background-image: url("https://www.transparenttextures.com/patterns/arabesque.png");
 }
 
 div {
@@ -36,6 +36,7 @@ button:hover {
 }
 
 .main {
+    margin-top: 50px;
     flex-direction: row;
     padding: 20px;
 }
@@ -48,7 +49,7 @@ button:hover {
 .left {
     background-color: var(--four);
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 13px;
     width: 70%;
     flex-direction: column;
 }
@@ -65,7 +66,7 @@ button:hover {
 }
 
 span.heading {
-    font-size: 25px;
+    font-size: 40px;
     font-weight: bold;
 }
 
@@ -134,7 +135,15 @@ td {
     padding: 10px; 
     width: 100%;
     /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px inset; */
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px inset;
+    box-shadow: rgb(255, 0, 0) 0px 0px 5px inset;
+}
+
+.tp {
+    display: flex;
+    box-shadow: var(--one) 0px 0px 5px inset;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
 }
 
 .table-input-item {
@@ -149,11 +158,6 @@ td {
 .table-input-price {
     min-width: 100px;
 }
-
-/* .th02, .th03, .th04 {
-    width: 10%;
-} */
-
 
 .new-item-button {
     width: max-content;
@@ -200,14 +204,6 @@ td {
     width: 1em;
     margin: auto;
 }
-
-
-
-
-
-
-
-
 
 .finalize {
     color: white;
@@ -303,4 +299,17 @@ td {
     border-radius: 10px;
     text-transform: uppercase;
     margin: 10px auto auto auto;
+}
+
+.receipt-intro {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.gray {
+    font-size: 0.9em;
+}
+
+.emphasis {
+    font-weight: bold;
 }

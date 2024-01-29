@@ -1,0 +1,30 @@
+@media screen and (max-width: 1750px) {
+
+    
+    div.main {
+        flex-direction: column;
+    }
+
+    div.left {
+        width: auto;
+    }
+
+    td {
+        width: max-content;
+        padding: 2px;
+    }
+
+    .table-input {
+        /* position: relative; */
+        min-width: 1ch;
+    }
+
+    .th01 {
+        min-width: 200px;
+        width: 40%;
+    }
+
+    .table-input-item {
+        width: 100%;
+    }
+}
