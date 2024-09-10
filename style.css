@@ -29,6 +29,7 @@ div {
 
 input {
     display: flex;
+    outline: 0;
 }
 
 button:hover {
